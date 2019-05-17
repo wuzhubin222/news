@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.news.dao.news_detailMapper">
+        <select id="querynews_detailid" resultType="news_detail">
+                SELECT *  FROM `news_detail` where 1=1
+                <if test="categoryid !=null and categoryid != 0 ">
+                    and categoryid = #{categoryid}
+                </if>
+                <if test="title != null and title != ''">
+                    and title LIKE CONCAT('%',#{title},'%')
+                </if>
+        </select>
+
+        <select id="savenews_detailid" resultType="news_detail">
+            SELECT *  FROM `news_detail` where id=#{id}
+        </select>
+
+        <update id="updatnews_detailid" parameterType="news_detail">
+                    UPDATE
+          `msgs`.`news_detail`
+         <set>
+             <if test="categoryid != null and categoryid != 0">`categoryid` = #{categoryid},</if>
+             <if test="title != null and title != ''">`title` = #{title},</if>
+             <if test="summary != null and summary != ''">`summary` = #{summary},</if>
+             <if test="author != null and author != ''">`author` = #{author},</if>
+             <if test="createDate != null and createDate != ''">`createDate` = #{createDate},</if>
+             <if test="updateDate != null and updateDate != ''">`updateDate` = #{updateDate}</if>
+         </set>
+        WHERE `id` = #{id}
+        </update>
+</mapper>
